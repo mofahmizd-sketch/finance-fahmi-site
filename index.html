@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تمويل الشركات - منصة تفاعلية</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Google Fonts (Arabic-friendly) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <style>
+    body {
+      font-family: "Cairo", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f7f8fa;
+      color: #222;
+    }
+    .navbar {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    }
+    .navbar-brand, .nav-link {
+      color: #fff !important;
+      font-weight: 600;
+    }
+    .hero {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+      padding: 2rem;
+    }
+    .card {
+      border: none;
+      border-radius: 14px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+    }
+    .section-title {
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+    .ratio-box {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .ratio-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1e3c72;
+    }
+    .badge-soft {
+      background: #e9f1ff;
+      color: #1e3c72;
+      border: 1px solid #cfe1ff;
+    }
+    footer {
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="#">تمويل الشركات</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navMain">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="#intro">الرئيسية</a></li>
+          <li class="nav-item"><a class="nav-link" href="#tools">الأدوات</a></li>
+          <li class="nav-item"><a class="nav-link" href="#chart">الرسوم البيانية</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero / Intro -->
+  <div class="container" id="intro">
+    <div class="hero mb-4">
+      <h1 class="section-title mb-3">مرحبًا بك في منصتك التفاعلية لتمويل الشركات</h1>
+      <p class="mb-2">
+        تمويل الشركات هو فن إدارة الهيكل المالي للشركة عبر تحقيق التوازن بين الدين وحقوق الملكية، وتحسين التدفقات النقدية،
+        ودعم قرارات الاستثمار. هدف هذه المنصة هو تمكينك بأدوات عملية لفهم أرقامك بسرعة واتخاذ قرارات أفضل.
+      </p>
+      <ul class="mb-0">
+        <li><strong>أدوات:</strong> حاسبات مالية تفاعلية ونماذج إدخال بيانات.</li>
+        <li><strong>تفاعل بصري:</strong> رسوم بيانية واضحة لمتابعة الإيرادات والمصروفات بمرور الوقت.</li>
+        <li><strong>سهولة:</strong> واجهة عربية بسيطة ومتجاوبة تعمل على مختلف الأجهزة.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tools Section -->
+  <div class="container" id="tools">
+    <div class="row g-4">
+      <!-- Data Input Card -->
+      <div class="col-lg-6">
+        <div class="card p-3">
+          <div class="card-body">
+            <h2 class="section-title h4 mb-3">نموذج إدخال البيانات</h2>
+            <form id="financeForm" class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">الإيرادات (شهريًا)</label>
+                <input type="number" class="form-control" id="revenueInput" placeholder="مثال: 250000" min="0" step="0.01" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">المصروفات (شهريًا)</label>
+                <input type="number" class="form-control" id="expensesInput" placeholder="مثال: 180000" min="0" step="0.01" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">الدين القائم</label>
+                <input type="number" class="form-control" id="debtInput" placeholder="مثال: 1200000" min="0" step="0.01" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">حقوق الملكية</label>
+                <input type="number" class="form-control" id="equityInput" placeholder="مثال: 2000000" min="0" step="0.01" required />
+              </div>
+
+              <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn btn-primary">تحديث البيانات</button>
+                <button type="button" id="resetBtn" class="btn btn-outline-secondary">إعادة التعيين</button>
+              </div>
+            </form>
+
+            <hr class="my-4" />
+
+            <div class="ratio-box">
+              <span class="badge badge-soft rounded-pill px-3 py-2">نسبة الدين إلى حقوق الملكية (D/E)</span>
+              <span class="ratio-value" id="deRatio">--</span>
+            </div>
+            <p class="mt-2 mb-0" id="ratioHint" style="color:#555;">
+              أدخل الدين وحقوق الملكية لحساب النسبة. كلما زادت النسبة، زادت الرافعة المالية والمخاطر المحتملة.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart Card -->
+      <div class="col-lg-6" id="chart">
+        <div class="card p-3">
+          <div class="card-body">
+            <h2 class="section-title h4 mb-3">تطور الإيرادات والمصروفات</h2>
+            <canvas id="revExpChart" height="220"></canvas>
+            <div class="mt-3">
+              <span class="badge badge-soft rounded-pill px-3 py-2">نصيحة</span>
+              <span class="ms-2 text-muted">راقب هوامش الربحية عبر الزمن وحدّث بياناتك دوريًا.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="container">
+    <footer class="py-4 text-center">
+      <small>© 2025 منصة تمويل الشركات — واجهة تجريبية تعليمية.</small>
+    </footer>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- App Logic -->
+  <script>
+    // Initial mock monthly data (12 months)
+    const months = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+    let revenueSeries = [220000,230000,240000,250000,260000,255000,265000,270000,280000,290000,300000,310000];
+    let expensesSeries = [180000,185000,190000,195000,200000,198000,202000,205000,210000,215000,220000,225000];
+
+    // Chart init
+    const ctx = document.getElementById("revExpChart").getContext("2d");
+    const revExpChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: months,
+        datasets: [
+          {
+            label: "الإيرادات",
+            data: revenueSeries,
+            borderColor: "#2a5298",
+            backgroundColor: "rgba(42,82,152,0.08)",
+            tension: 0.25,
+            fill: true
+          },
+          {
+            label: "المصروفات",
+            data: expensesSeries,
+            borderColor: "#e67e22",
+            backgroundColor: "rgba(230,126,34,0.08)",
+            tension: 0.25,
+            fill: true
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: "bottom" },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const val = context.parsed.y || 0;
+                return `${context.dataset.label}: ${val.toLocaleString()}`;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            ticks: {
+              callback: function(value) { return value.toLocaleString(); }
+            }
+          }
+        }
+      }
+    });
+
+    // Utilities
+    function clampNumber(n) {
+      if (typeof n !== "number" || isNaN(n)) return 0;
+      return Math.max(0, n);
+    }
+
+    function formatRatio(r) {
+      if (!isFinite(r)) return "--";
+      return r.toFixed(2);
+    }
+
+    function updateRatio(debt, equity) {
+      const de = equity === 0 ? Infinity : debt / equity;
+      const el = document.getElementById("deRatio");
+      el.textContent = formatRatio(de);
+
+      const hint = document.getElementById("ratioHint");
+      if (!isFinite(de)) {
+        hint.textContent = "حقوق الملكية تساوي صفرًا — النسبة لا يمكن حسابها. راجع هيكل رأس المال.";
+        hint.style.color = "#b00020";
+      } else if (de > 2) {
+        hint.textContent = "النسبة مرتفعة (>2): الرافعة المالية عالية وقد تزيد المخاطر على الاستدامة.";
+        hint.style.color = "#b00020";
+      } else if (de > 1) {
+        hint.textContent = "نسبة متوسطة (1–2): تحقق من قدرة السداد وخطط التمويل.";
+        hint.style.color = "#a56c00";
+      } else {
+        hint.textContent = "نسبة منخفضة (<1): اعتماد أكبر على حقوق الملكية؛ قد تقل مخاطر الديون.";
+        hint.style.color = "#2f7d32";
+      }
+    }
+
+    function updateChart(newRevenue, newExpenses) {
+      // Push latest month values and remove oldest to simulate rolling update
+      revenueSeries = [...revenueSeries.slice(1), newRevenue];
+      expensesSeries = [...expensesSeries.slice(1), newExpenses];
+
+      revExpChart.data.datasets[0].data = revenueSeries;
+      revExpChart.data.datasets[1].data = expensesSeries;
+      revExpChart.update();
+    }
+
+    // Form handlers
+    const form = document.getElementById("financeForm");
+    const resetBtn = document.getElementById("resetBtn");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const rev = clampNumber(parseFloat(document.getElementById("revenueInput").value));
+      const exp = clampNumber(parseFloat(document.getElementById("expensesInput").value));
+      const debt = clampNumber(parseFloat(document.getElementById("debtInput").value));
+      const equity = clampNumber(parseFloat(document.getElementById("equityInput").value));
+
+      // Update ratio and chart
+      updateRatio(debt, equity);
+      updateChart(rev, exp);
+    });
+
+    resetBtn.addEventListener("click", function() {
+      // Reset fields
+      document.getElementById("revenueInput").value = "";
+      document.getElementById("expensesInput").value = "";
+      document.getElementById("debtInput").value = "";
+      document.getElementById("equityInput").value = "";
+
+      // Reset chart series to initial
+      revenueSeries = [220000,230000,240000,250000,260000,255000,265000,270000,280000,290000,300000,310000];
+      expensesSeries = [180000,185000,190000,195000,200000,198000,202000,205000,210000,215000,220000,225000];
+      revExpChart.data.datasets[0].data = revenueSeries;
+      revExpChart.data.datasets[1].data = expensesSeries;
+      revExpChart.update();
+
+      // Reset ratio
+      document.getElementById("deRatio").textContent = "--";
+      const hint = document.getElementById("ratioHint");
+      hint.textContent = "أدخل الدين وحقوق الملكية لحساب النسبة. كلما زادت النسبة، زادت الرافعة المالية والمخاطر المحتملة.";
+      hint.style.color = "#555";
+    });
+  </script>
+</body>
+</html>
